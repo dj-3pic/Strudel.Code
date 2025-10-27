@@ -1,0 +1,31 @@
+setcps(60/60/4)
+
+const base = stack(
+  stack(
+    note("<a1 f1 c2 g1>").sound("saw"),
+    note("<a2 f2 c3 g2>").sound("saw").gain(0.5),
+    note("<e3 c3 g3 d3>").sound("saw").gain(0.25),
+    note("<c4 a3 e4 b3>").sound("saw").gain(0.15)
+  ).pan(sine.range(-0.4, 0.4).slow(8)),
+  note("<[e5 c5] [c5 g5] [g5 d5] [d5 a5]>")
+  .sometimes(x=>x.rev())
+  .fast(2.5).sound("saw")
+  .late("<1 1.25 0.75 1.125>")
+  .early("<0 0.05 -0.05 0.02>")
+  .gain(perlin.range(0.0625,0.25).slow(4)).pan("-0.8|0.8")
+  .sometimesBy(0.2,x=>x.gain(0.5))
+).dist(1/10)
+
+$:base
+  .transpose("<0 7 2 0 5 12 0 2>".fast(2))
+  .lpf(600).lpq(sine.range(5,15).fast(2))
+$_:base.decay(1.5)
+  .slow(2.5).lpf(sine.range(100,200).fast(3)).lpq(10)
+  .penv(2)
+  .sometimes(x=>x.ply(4))
+$_:base.fast(4.5).decay(0.5)
+  .lpf(tri.range(100,200).fast(4)).lpq(15).lpenv(2)
+  .sometimesBy(0.3,x=>x.mask("0"))
+
+$:base.slow(2),lpf(sine.range(100,200).lpq(10))
+all(x=>x.room(1/2).delay(1/4).postgain(1/4).scope({scale:8,pos:0.5,rot:(0)}))
