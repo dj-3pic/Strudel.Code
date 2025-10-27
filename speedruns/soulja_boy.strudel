@@ -1,0 +1,12 @@
+// "Solja Boy"
+//@by "Simon Reitinger"
+
+setcpm(64)
+stack(
+  s("[bd ~!2 bd ~ bd ~!2]/4").bank("tr808").distort(3),
+  s("<~ cp>, <hh*4 hh*4 hh*4 hh*8>, <~!8 perc ~!2 perc ~!2 perc ~>*4").bank("tr808"),
+  stepcat([3,60], [3,55],[4,56],[3,60],[3,55]).slow(4).note().dec(.5).sound("vibraphone"),
+  note("24/8").s("piano"),
+  note("60/8").s("gm_orchestra_hit").n("1"),
+  s("<~ 3! gm_reverse_cymbal>/2")
+)
